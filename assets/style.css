@@ -256,6 +256,21 @@ img { max-width: 100%; }
 .theme-switch button[aria-pressed="true"] { background: var(--surface-2); color: var(--text); }
 .theme-switch button:focus-visible { outline-offset: 2px; }
 
+/* Touch screens: every target at least 44×44px (iOS 44pt / Android 48dp guidance; WCAG minimum is 24px). */
+@media (pointer: coarse) {
+  .btn { height: 44px; }
+  .btn-large { height: 48px; }
+  .brand { min-height: 44px; }
+  .theme-switch button { width: 44px; height: 44px; }
+  .site-footer nav ul { gap: 0; margin-top: 4px; }
+  .site-footer nav a { display: inline-flex; align-items: center; min-height: 44px; }
+  .site-footer .lang-switch ul { gap: 0 16px; }
+}
+
+/* Early access: the address in plain text for visitors without an email app. */
+.cta .alt { margin-top: 12px; font-size: 14px; }
+.cta .alt a { color: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+
 /* 404 */
 .not-found { padding-top: 96px; padding-bottom: 96px; }
 .not-found h1 { font-size: 40px; }

@@ -47,7 +47,7 @@ EXTRA = {
            "early_pricing": "Plans start when Dexys Klip opens.",
            "mail_subject": "Early access to Dexys Klip",
            "mail_body": "Hi,\n\nI’d like early access to Dexys Klip.\n\nPlan I’m interested in: {plan}\nWhat I want to make clips from (podcast, streams, talks, gameplay…): \n\nThanks!",
-           "mail_any": "not sure yet",
+           "mail_any": "not sure yet", "early_alt": "No email app? Write to {email}.",
 },
     "pt-BR": {"nf_title": "Página não encontrada", "nf_body": "Esta página não existe. Ela pode ter mudado de lugar.",
               "nf_home": "Voltar para o início",
@@ -59,7 +59,7 @@ EXTRA = {
               "early_pricing": "Os planos começam quando o Dexys Klip abrir.",
               "mail_subject": "Acesso antecipado ao Dexys Klip",
               "mail_body": "Olá,\n\nQuero acesso antecipado ao Dexys Klip.\n\nPlano que me interessa: {plan}\nDe onde quero fazer clipes (podcast, lives, palestras, gameplay…): \n\nObrigado!",
-              "mail_any": "ainda não sei"},
+              "mail_any": "ainda não sei", "early_alt": "Sem app de e-mail? Escreva para {email}."},
     "nl": {"nf_title": "Pagina niet gevonden", "nf_body": "Deze pagina bestaat niet. Misschien is hij verplaatst.",
            "nf_home": "Terug naar de homepage",
            "early": "Vroege toegang aanvragen", "early_short": "Vroege toegang",
@@ -70,7 +70,7 @@ EXTRA = {
            "early_pricing": "De abonnementen starten zodra Dexys Klip opengaat.",
            "mail_subject": "Vroege toegang tot Dexys Klip",
            "mail_body": "Hoi,\n\nIk wil graag vroege toegang tot Dexys Klip.\n\nAbonnement dat me interesseert: {plan}\nWaar ik clips van wil maken (podcast, streams, presentaties, gameplay…): \n\nBedankt!",
-           "mail_any": "weet ik nog niet"},
+           "mail_any": "weet ik nog niet", "early_alt": "Geen e-mailprogramma? Schrijf naar {email}."},
 }
 
 STRINGS = json.loads((ROOT / "src/strings.json").read_text())
@@ -339,6 +339,7 @@ def landing(lang: dict) -> str:
     hero_note = t("landing.hero_note") if APP_LIVE else f'{t("early_note")}<br>{t("early_hint")}'
     cta_title = t("landing.cta_title") if APP_LIVE else t("early_cta_title")
     cta_body = t("landing.cta_body") if APP_LIVE else t("early_cta_body")
+    cta_alt = "" if APP_LIVE else '<p class="alt">' + t("early_alt", email="EMAIL").replace("EMAIL", f'<a href="mailto:{CONTACT}">{CONTACT}</a>') + "</p>"
     privacy_links = f' <a href="{APP}/subprocessors">{t("landing.privacy_sub")}</a> · <a href="{APP}/privacy">{t("legal.p_title")}</a>' if APP_LIVE else ""
     pricing_note = f'{t("pricing.vatNote")} {t("pricing.lead")}' if APP_LIVE else f'{t("early_pricing")} {t("pricing.vatNote")} {t("pricing.lead")}'
     jsonld = json.dumps({
@@ -401,7 +402,7 @@ def landing(lang: dict) -> str:
   </div></section>
 
   <section class="wrap cta-wrap" aria-labelledby="cta-title"><div class="cta">
-    <div><h2 id="cta-title">{cta_title}</h2><p>{cta_body}</p></div>
+    <div><h2 id="cta-title">{cta_title}</h2><p>{cta_body}</p>{cta_alt}</div>
     <a class="btn btn-inverse btn-large" href="{start_href}">{start_label} {icon("arrow")}</a>
   </div></section>
 </main>
