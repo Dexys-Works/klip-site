@@ -40,15 +40,33 @@
 </header>
 <main id="content">
   <section class="wrap hero" aria-labelledby="hero-title">
-    <div>
-      <p class="eyebrow">Voor podcasts, streams, presentaties en gameplay</p>
+    <div class="hero-copy">
+      <p class="pill">Vroege toegang · binnenkort</p>
       <h1 id="hero-title">Lange video erin. Korte clips eruit.</h1>
       <p class="lead">Dexys Klip vindt de beste momenten in je video, maakt ze verticaal met gezichtsvolging en voegt geanimeerde ondertitels toe, klaar voor TikTok, Reels en Shorts. Jij bepaalt wat je houdt.</p>
-      <div class="hero-ctas">
-        <a class="btn btn-primary btn-large" href="mailto:paulo.cardoso@outlook.com?subject=Vroege%20toegang%20tot%20Dexys%20Klip&amp;body=Hoi%2C%0A%0AIk%20wil%20graag%20vroege%20toegang%20tot%20Dexys%20Klip.%0A%0AAbonnement%20dat%20me%20interesseert%3A%20weet%20ik%20nog%20niet%0AWaar%20ik%20clips%20van%20wil%20maken%20%28podcast%2C%20streams%2C%20presentaties%2C%20gameplay%E2%80%A6%29%3A%20%0A%0ABedankt%21">Vroege toegang aanvragen <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-        <a class="btn btn-ghost btn-large" href="#pricing">Bekijk abonnementen</a>
-      </div>
-      <p class="muted small">Binnenkort beschikbaar. Gratis abonnement: 30 minuten video per maand, geen creditcard nodig.<br>Opent je e-mailprogramma. We gebruiken je adres alleen om je te laten weten wanneer je kunt beginnen.</p>
+      <form class="capture capture-hero" action="mailto:paulo.cardoso@outlook.com" method="get" data-capture data-to="paulo.cardoso@outlook.com"
+  data-subject="Vroege toegang tot Dexys Klip" data-body="Hoi,
+
+Ik wil graag vroege toegang tot Dexys Klip.
+
+Een video waar ik clips van wil maken: {link}
+
+Bedankt!" data-body-empty="Hoi,
+
+Ik wil graag vroege toegang tot Dexys Klip.
+
+Abonnement dat me interesseert: weet ik nog niet
+Waar ik clips van wil maken (podcast, streams, presentaties, gameplay…): 
+
+Bedankt!">
+  <input type="hidden" name="subject" value="Vroege toegang tot Dexys Klip">
+  <label class="sr-only" for="link-hero">Videolink (optioneel)</label>
+  <span class="capture-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><path d="M8 12h8"/></svg></span>
+  <input id="link-hero" name="body" type="text" inputmode="url" autocomplete="url" spellcheck="false" placeholder="Plak een link van YouTube, Vimeo of Twitch">
+  <button class="btn btn-primary" type="submit">Vroege toegang aanvragen</button>
+</form>
+      <p class="muted small hero-note">Gratis abonnement: 30 minuten video per maand, geen creditcard nodig. Opent je e-mailprogramma. We gebruiken je adres alleen om je te laten weten wanneer je kunt beginnen.</p>
+      <ul class="chips" aria-label="Hoogtepunten"><li><a href="#features">Beste momenten</a></li><li><a href="#features">Viraliteitsscore</a></li><li><a href="#features">Gezichtsvolging</a></li><li><a href="#captions">Geanimeerde ondertitels</a></li><li><a href="#features">Huisstijlkits</a></li><li><a href="#faq">15 videotalen</a></li></ul>
     </div>
     <div class="hero-visual" role="img" aria-label="Illustratie: een brede podcastvideo met drie gemarkeerde momenten op de tijdlijn. Eén moment wordt een verticale clip die het gezicht van de spreker volgt, met ondertitels per woord en een viraliteitsscore van 92.">
   <div aria-hidden="true">
@@ -61,7 +79,9 @@
       <div class="bars"><span class="" style="height:38%"></span><span class="" style="height:52%"></span><span class="" style="height:30%"></span><span class="" style="height:64%"></span><span class="" style="height:46%"></span><span class="" style="height:72%"></span><span class="on" style="height:58%"></span><span class="on" style="height:88%"></span><span class="on" style="height:94%"></span><span class="on" style="height:80%"></span><span class="on" style="height:70%"></span><span class="" style="height:44%"></span><span class="" style="height:36%"></span><span class="" style="height:50%"></span><span class="" style="height:62%"></span><span class="" style="height:40%"></span><span class="" style="height:34%"></span><span class="" style="height:56%"></span><span class="" style="height:48%"></span><span class="on" style="height:76%"></span><span class="on" style="height:90%"></span><span class="on" style="height:84%"></span><span class="on" style="height:66%"></span><span class="" style="height:42%"></span><span class="" style="height:32%"></span><span class="" style="height:46%"></span><span class="" style="height:58%"></span><span class="" style="height:38%"></span><span class="" style="height:52%"></span><span class="on" style="height:70%"></span><span class="on" style="height:86%"></span><span class="on" style="height:96%"></span><span class="on" style="height:78%"></span><span class="on" style="height:60%"></span><span class="" style="height:44%"></span><span class="" style="height:36%"></span><span class="" style="height:54%"></span><span class="" style="height:40%"></span><span class="" style="height:30%"></span><span class="" style="height:48%"></span></div>
       <div class="moments"><span>#1</span><span>#2</span><span>#3</span></div>
     </div>
-    <div class="phone">
+    <div class="phone phone-back phone-left"><div class="phone-speaker"><svg class="sp sp-b" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="40" r="15" fill="currentColor"/><path d="M20 100c0-24 13-38 30-38s30 14 30 38z" fill="currentColor"/></svg></div><span class="score"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>88</span></div>
+    <div class="phone phone-back phone-right"><div class="phone-speaker"><svg class="sp sp-a" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="40" r="15" fill="currentColor"/><path d="M20 100c0-24 13-38 30-38s30 14 30 38z" fill="currentColor"/></svg></div><span class="score"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>85</span></div>
+    <div class="phone phone-front">
       <div class="phone-speaker"><svg class="sp" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="40" r="15" fill="currentColor"/><path d="M20 100c0-24 13-38 30-38s30 14 30 38z" fill="currentColor"/></svg></div>
       <div class="track"></div>
       <span class="score"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>92</span>
@@ -97,13 +117,28 @@
     <ul class="features"><li><span class="tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg></span><h3>Verticaal, met gezichtsvolging</h3><p class="muted">Klip volgt de spreker van shot naar shot. Voor schermopnames kies je een vervaagde achtergrond of bepaal je zelf de uitsnede.</p></li><li><span class="tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="14" x="3" y="5" rx="2"/><path d="M7 15h4M15 15h2M7 11h2M13 11h4"/></svg></span><h3>Geanimeerde ondertitels</h3><p class="muted">Ondertitels per woord in meerdere stijlen, met benadrukte trefwoorden. Verbeter een woord in het transcript en de ondertitels volgen.</p></li><li><span class="tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg></span><h3>Titels, beschrijvingen, hashtags</h3><p class="muted">Elke clip krijgt posttekst die je kunt aanpassen en met één klik kopieert.</p></li><li><span class="tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"/></svg></span><h3>Een eenvoudige editor</h3><p class="muted">Knip in het transcript, wissel van ondertitelstijl en uitsnede, kies 9:16, 1:1, 4:5 of 16:9 en exporteer.</p></li><li><span class="tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.83-.44-1.12-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.55-2.5 5.55-5.55C21.97 6.01 17.46 2 12 2z"/></svg></span><h3>Huisstijlkits</h3><p class="muted">Sla je logo, lettertypes en ondertitelkleuren één keer op. Ze worden op elke nieuwe clip toegepast.</p></li><li><span class="tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><h3>Teamwerkruimtes</h3><p class="muted">Werk samen in een gedeelde werkruimte. Beheerders regelen facturatie en data; leden maken clips.</p></li></ul>
   </div></section>
 
-  <section id="privacy" class="section band" aria-labelledby="privacy-title"><div class="wrap">
+  <section id="captions" class="section band" aria-labelledby="captions-title"><div class="wrap">
+    <div class="section-head"><h2 id="captions-title">Ondertitels in vijf stijlen</h2><p>Kies per clip een stijl, of leg er een vast in je huisstijlkit met je eigen lettertype en kleuren.</p></div>
+    <ul class="styles"><li class="style-card style-bold"><div class="style-frame" aria-hidden="true">
+      <div class="style-speaker"><svg class="sp" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="40" r="15" fill="currentColor"/><path d="M20 100c0-24 13-38 30-38s30 14 30 38z" fill="currentColor"/></svg></div><p class="style-caption"><span class="">Niemand</span> <span class="on">vertelt</span> <span class="">je</span></p></div>
+      <p class="style-name">Bold Pop</p></li><li class="style-card style-karaoke"><div class="style-frame" aria-hidden="true">
+      <div class="style-speaker"><svg class="sp" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="40" r="15" fill="currentColor"/><path d="M20 100c0-24 13-38 30-38s30 14 30 38z" fill="currentColor"/></svg></div><p class="style-caption"><span class="">Niemand</span> <span class="">vertelt</span> <span class="on">je</span> <span class="">dit</span></p></div>
+      <p class="style-name">Karaoke</p></li><li class="style-card style-minimal"><div class="style-frame" aria-hidden="true">
+      <div class="style-speaker"><svg class="sp" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="40" r="15" fill="currentColor"/><path d="M20 100c0-24 13-38 30-38s30 14 30 38z" fill="currentColor"/></svg></div><p class="style-caption"><span class="">Niemand</span> <span class="">vertelt</span> <span class="">je</span> <span class="">dit</span> <span class="">over</span> <span class="">je</span> <span class="">eerste</span></p></div>
+      <p class="style-name">Minimal</p></li><li class="style-card style-boxed"><div class="style-frame" aria-hidden="true">
+      <div class="style-speaker"><svg class="sp" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="40" r="15" fill="currentColor"/><path d="M20 100c0-24 13-38 30-38s30 14 30 38z" fill="currentColor"/></svg></div><p class="style-caption"><span class="">Niemand</span> <span class="on">vertelt</span> <span class="">je</span> <span class="">dit</span> <span class="">over</span></p></div>
+      <p class="style-name">Boxed</p></li><li class="style-card style-neon"><div class="style-frame" aria-hidden="true">
+      <div class="style-speaker"><svg class="sp" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="40" r="15" fill="currentColor"/><path d="M20 100c0-24 13-38 30-38s30 14 30 38z" fill="currentColor"/></svg></div><p class="style-caption"><span class="">Niemand</span> <span class="on">vertelt</span></p></div>
+      <p class="style-name">Neon</p></li></ul>
+  </div></section>
+
+  <section id="privacy" class="section" aria-labelledby="privacy-title"><div class="wrap">
     <div class="section-head"><h2 id="privacy-title">Je video’s blijven in de EU</h2><p>Voor makers en teams die willen weten waar hun content naartoe gaat.</p></div>
     <ul class="grid-3"><li class="card"><span class="symbol"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><h3>Verwerkt in de EU</h3><p class="muted">Video’s, transcripten, clips en betalingen worden opgeslagen en verwerkt in de Europese Unie. Betalingen lopen via Mollie in Nederland.</p></li><li class="card"><span class="symbol"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.4 10.4 0 0 1 12 5c7 0 10 7 10 7a13.2 13.2 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.5 13.5 0 0 0 2 12s3 7 10 7a9.7 9.7 0 0 0 5.39-1.61"/><path d="m2 2 20 20"/></svg></span><h3>Niet gebruikt voor training</h3><p class="muted">Je video’s en transcripten worden alleen gebruikt om je clips te maken. Ze worden niet gebruikt om AI-modellen te trainen.</p></li><li class="card"><span class="symbol"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg></span><h3>Exporteer of verwijder wanneer je wilt</h3><p class="muted">Download een kopie van alles in je werkruimte, of verwijder het, via de pagina Data en privacy.</p></li></ul>
     <p class="note">Inloggen verloopt via Clerk, vanuit de Verenigde Staten.</p>
   </div></section>
 
-  <section id="pricing" class="section" aria-labelledby="pricing-title"><div class="wrap">
+  <section id="pricing" class="section band" aria-labelledby="pricing-title"><div class="wrap">
     <div class="section-head"><h2 id="pricing-title">Eenvoudige maandabonnementen</h2><p>Begin gratis. Upgrade als je meer minuten, langere video’s of geen watermerk nodig hebt.</p></div>
     <ul class="grid-3 plans"><li class="card plan"><h3>Gratis</h3><p class="muted small">Probeer het met je eigen video&#x27;s.</p>
       <p class="price">€ 0</p><ul class="plan-features"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>30 minuten video per maand</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Video&#x27;s tot 20 min</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Export in 720p</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>1 video tegelijk verwerken</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Dexys Klip-watermerk</li></ul>
@@ -121,8 +156,28 @@
   </div></section>
 
   <section class="wrap cta-wrap" aria-labelledby="cta-title"><div class="cta">
-    <div><h2 id="cta-title">Probeer het als een van de eersten</h2><p>Dexys Klip gaat binnenkort open. Stuur ons een korte e-mail en we laten je weten wanneer je account klaar is.</p><p class="alt">Geen e-mailprogramma? Schrijf naar <a href="mailto:paulo.cardoso@outlook.com">paulo.cardoso@outlook.com</a>.</p></div>
-    <a class="btn btn-inverse btn-large" href="mailto:paulo.cardoso@outlook.com?subject=Vroege%20toegang%20tot%20Dexys%20Klip&amp;body=Hoi%2C%0A%0AIk%20wil%20graag%20vroege%20toegang%20tot%20Dexys%20Klip.%0A%0AAbonnement%20dat%20me%20interesseert%3A%20weet%20ik%20nog%20niet%0AWaar%20ik%20clips%20van%20wil%20maken%20%28podcast%2C%20streams%2C%20presentaties%2C%20gameplay%E2%80%A6%29%3A%20%0A%0ABedankt%21">Vroege toegang aanvragen <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    <div class="cta-copy"><h2 id="cta-title">Probeer het als een van de eersten</h2><p>Dexys Klip gaat binnenkort open. Stuur ons een korte e-mail en we laten je weten wanneer je account klaar is.</p><p class="alt">Geen e-mailprogramma? Schrijf naar <a href="mailto:paulo.cardoso@outlook.com">paulo.cardoso@outlook.com</a>.</p></div>
+    <form class="capture capture-cta" action="mailto:paulo.cardoso@outlook.com" method="get" data-capture data-to="paulo.cardoso@outlook.com"
+  data-subject="Vroege toegang tot Dexys Klip" data-body="Hoi,
+
+Ik wil graag vroege toegang tot Dexys Klip.
+
+Een video waar ik clips van wil maken: {link}
+
+Bedankt!" data-body-empty="Hoi,
+
+Ik wil graag vroege toegang tot Dexys Klip.
+
+Abonnement dat me interesseert: weet ik nog niet
+Waar ik clips van wil maken (podcast, streams, presentaties, gameplay…): 
+
+Bedankt!">
+  <input type="hidden" name="subject" value="Vroege toegang tot Dexys Klip">
+  <label class="sr-only" for="link-cta">Videolink (optioneel)</label>
+  <span class="capture-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><path d="M8 12h8"/></svg></span>
+  <input id="link-cta" name="body" type="text" inputmode="url" autocomplete="url" spellcheck="false" placeholder="Plak een link van YouTube, Vimeo of Twitch">
+  <button class="btn btn-primary" type="submit">Vroege toegang</button>
+</form>
   </div></section>
 </main>
 <footer class="site-footer">
@@ -139,6 +194,27 @@
     <div class="footer-settings"><nav class="lang-switch" aria-label="Taal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg><ul><li><a href="/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="/pt-br/" hreflang="pt-BR" lang="pt-BR" data-lang="pt-BR">Português (Brasil)</a></li><li><a href="/nl/" hreflang="nl" lang="nl" data-lang="nl" aria-current="page">Nederlands</a></li></ul></nav><div class="theme-switch" role="group" aria-label="Thema" hidden><button type="button" data-theme-value="system" aria-label="Systeemthema gebruiken" title="Systeemthema gebruiken" aria-pressed="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button><button type="button" data-theme-value="light" aria-label="Licht thema" title="Licht thema" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button><button type="button" data-theme-value="dark" aria-label="Donker thema" title="Donker thema" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button></div></div>
   </div>
 </footer>
+<div class="dock" data-dock hidden><form class="capture capture-dock" action="mailto:paulo.cardoso@outlook.com" method="get" data-capture data-to="paulo.cardoso@outlook.com"
+  data-subject="Vroege toegang tot Dexys Klip" data-body="Hoi,
+
+Ik wil graag vroege toegang tot Dexys Klip.
+
+Een video waar ik clips van wil maken: {link}
+
+Bedankt!" data-body-empty="Hoi,
+
+Ik wil graag vroege toegang tot Dexys Klip.
+
+Abonnement dat me interesseert: weet ik nog niet
+Waar ik clips van wil maken (podcast, streams, presentaties, gameplay…): 
+
+Bedankt!">
+  <input type="hidden" name="subject" value="Vroege toegang tot Dexys Klip">
+  <label class="sr-only" for="link-dock">Videolink (optioneel)</label>
+  <span class="capture-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><path d="M8 12h8"/></svg></span>
+  <input id="link-dock" name="body" type="text" inputmode="url" autocomplete="url" spellcheck="false" placeholder="Plak een link van YouTube, Vimeo of Twitch">
+  <button class="btn btn-primary" type="submit">Vroege toegang</button>
+</form></div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Dexys Klip", "url": "https://klip.dexysworks.com/nl/", "inLanguage": "nl", "applicationCategory": "MultimediaApplication", "operatingSystem": "Web", "description": "Plak een link of upload een video. Dexys Klip vindt de beste momenten, maakt ze verticaal met gezichtsvolging en voegt geanimeerde ondertitels toe voor TikTok, Reels en Shorts. Verwerkt in de EU.", "publisher": {"@type": "Organization", "name": "Dexys Works", "url": "https://dexysworks.com"}, "offers": [{"@type": "Offer", "name": "Gratis", "price": 0, "priceCurrency": "EUR"}, {"@type": "Offer", "name": "Pro", "price": 19, "priceCurrency": "EUR"}, {"@type": "Offer", "name": "Business", "price": 79, "priceCurrency": "EUR"}]}</script>
 </body>
 </html>

@@ -31,6 +31,36 @@
     a.addEventListener("click", function () { store.set("klip-lang", a.dataset.lang); });
   });
 
+  // Early access: build the email (subject and body in the page's language, with the pasted link if any).
+  document.querySelectorAll("form[data-capture]").forEach(function (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var link = (form.querySelector('input[name="body"]').value || "").trim();
+      var body = link ? form.dataset.body.replace("{link}", link) : form.dataset.bodyEmpty;
+      window.location.href = "mailto:" + form.dataset.to + "?subject=" + encodeURIComponent(form.dataset.subject) +
+        "&body=" + encodeURIComponent(body);
+    });
+  });
+
+  // Bottom bar: visible while neither the hero form nor the closing section is on screen.
+  var dock = document.querySelector("[data-dock]");
+  var watched = [document.querySelector(".capture-hero"), document.querySelector(".cta"), document.querySelector(".site-footer")]
+    .filter(Boolean);
+  if (dock && watched.length && "IntersectionObserver" in window) {
+    var visible = new Map();
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { visible.set(en.target, en.isIntersecting); });
+      var anyVisible = watched.some(function (el) { return visible.get(el); });
+      var past = watched[0].getBoundingClientRect().bottom < 0; // only after scrolling past the hero form
+      dock.hidden = anyVisible || !past;
+    });
+    watched.forEach(function (el) { io.observe(el); });
+    window.addEventListener("scroll", function () {
+      var anyVisible = watched.some(function (el) { return visible.get(el); });
+      dock.hidden = anyVisible || watched[0].getBoundingClientRect().bottom >= 0;
+    }, { passive: true });
+  }
+
   var year = document.querySelector("[data-year]");
   if (year) year.textContent = String(new Date().getFullYear());
 })();

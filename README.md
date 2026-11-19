@@ -19,7 +19,7 @@ third party is involved. When the app works at its URL, set `APP_LIVE = True`, r
 | `404.html`, `sitemap.xml`, `robots.txt` | Generated as well. |
 | `src/build.py` | Generates the files above. Plan limits, prices and the app URL are constants at the top. |
 | `src/strings.json` | All page text in the three languages. |
-| `assets/` | Stylesheet, script, Manrope font (OFL), favicon and the social-sharing image. |
+| `assets/` | Stylesheet, script, fonts (Manrope for the page; Poppins and Anton, the app's caption fonts, subset to Latin; all SIL Open Font License), favicon and the social-sharing image. |
 | `CNAME`, `.nojekyll` | GitHub Pages custom domain; serve files as they are. |
 
 ## Change the page

@@ -48,6 +48,13 @@ EXTRA = {
            "mail_subject": "Early access to Dexys Klip",
            "mail_body": "Hi,\n\nI’d like early access to Dexys Klip.\n\nPlan I’m interested in: {plan}\nWhat I want to make clips from (podcast, streams, talks, gameplay…): \n\nThanks!",
            "mail_any": "not sure yet", "early_alt": "No email app? Write to {email}.",
+           "hero_pill": "Early access · opening soon", "link_label": "Video link (optional)",
+           "link_placeholder": "Paste a YouTube, Vimeo or Twitch link",
+           "early_free": "Free plan: 30 minutes of video a month, no card needed.",
+           "mail_body_link": "Hi,\n\nI’d like early access to Dexys Klip.\n\nA video I’d like to clip: {link}\n\nThanks!",
+           "chips_label": "Highlights", "chip_moments": "Best moments", "chip_reframe": "Face tracking", "chip_langs": "15 video languages",
+           "styles_title": "Captions in five styles",
+           "styles_lead": "Pick a style per clip, or set one in your brand kit with your own font and colours.",
 },
     "pt-BR": {"nf_title": "Página não encontrada", "nf_body": "Esta página não existe. Ela pode ter mudado de lugar.",
               "nf_home": "Voltar para o início",
@@ -59,7 +66,14 @@ EXTRA = {
               "early_pricing": "Os planos começam quando o Dexys Klip abrir.",
               "mail_subject": "Acesso antecipado ao Dexys Klip",
               "mail_body": "Olá,\n\nQuero acesso antecipado ao Dexys Klip.\n\nPlano que me interessa: {plan}\nDe onde quero fazer clipes (podcast, lives, palestras, gameplay…): \n\nObrigado!",
-              "mail_any": "ainda não sei", "early_alt": "Sem app de e-mail? Escreva para {email}."},
+              "mail_any": "ainda não sei", "early_alt": "Sem app de e-mail? Escreva para {email}.",
+              "hero_pill": "Acesso antecipado · em breve", "link_label": "Link do vídeo (opcional)",
+              "link_placeholder": "Cole um link do YouTube, Vimeo ou Twitch",
+              "early_free": "Plano grátis: 30 minutos de vídeo por mês, sem cartão.",
+              "mail_body_link": "Olá,\n\nQuero acesso antecipado ao Dexys Klip.\n\nUm vídeo que eu gostaria de recortar: {link}\n\nObrigado!",
+              "chips_label": "Destaques", "chip_moments": "Melhores momentos", "chip_reframe": "Rastreamento de rosto", "chip_langs": "15 idiomas de vídeo",
+              "styles_title": "Legendas em cinco estilos",
+              "styles_lead": "Escolha um estilo por clipe, ou defina um no seu kit de marca com sua fonte e cores."},
     "nl": {"nf_title": "Pagina niet gevonden", "nf_body": "Deze pagina bestaat niet. Misschien is hij verplaatst.",
            "nf_home": "Terug naar de homepage",
            "early": "Vroege toegang aanvragen", "early_short": "Vroege toegang",
@@ -70,7 +84,14 @@ EXTRA = {
            "early_pricing": "De abonnementen starten zodra Dexys Klip opengaat.",
            "mail_subject": "Vroege toegang tot Dexys Klip",
            "mail_body": "Hoi,\n\nIk wil graag vroege toegang tot Dexys Klip.\n\nAbonnement dat me interesseert: {plan}\nWaar ik clips van wil maken (podcast, streams, presentaties, gameplay…): \n\nBedankt!",
-           "mail_any": "weet ik nog niet", "early_alt": "Geen e-mailprogramma? Schrijf naar {email}."},
+           "mail_any": "weet ik nog niet", "early_alt": "Geen e-mailprogramma? Schrijf naar {email}.",
+           "hero_pill": "Vroege toegang · binnenkort", "link_label": "Videolink (optioneel)",
+           "link_placeholder": "Plak een link van YouTube, Vimeo of Twitch",
+           "early_free": "Gratis abonnement: 30 minuten video per maand, geen creditcard nodig.",
+           "mail_body_link": "Hoi,\n\nIk wil graag vroege toegang tot Dexys Klip.\n\nEen video waar ik clips van wil maken: {link}\n\nBedankt!",
+           "chips_label": "Hoogtepunten", "chip_moments": "Beste momenten", "chip_reframe": "Gezichtsvolging", "chip_langs": "15 videotalen",
+           "styles_title": "Ondertitels in vijf stijlen",
+           "styles_lead": "Kies per clip een stijl, of leg er een vast in je huisstijlkit met je eigen lettertype en kleuren."},
 }
 
 STRINGS = json.loads((ROOT / "src/strings.json").read_text())
@@ -152,6 +173,47 @@ def start_link(code: str, t, plan_name: str = "") -> tuple:
     return early_href(code, plan_name), t("early")
 
 
+def capture_form(code: str, t, variant: str, label: str) -> str:
+    """Link field + early-access button. Without JavaScript the browser opens mailto: with the link as the body;
+    site.js builds the full message in the visitor's language (with or without a link)."""
+    raw = EXTRA[code]
+    body_empty = raw["mail_body"].replace("{plan}", raw["mail_any"])
+    return f'''<form class="capture capture-{variant}" action="mailto:{CONTACT}" method="get" data-capture data-to="{CONTACT}"
+  data-subject="{escape(raw["mail_subject"])}" data-body="{escape(raw["mail_body_link"])}" data-body-empty="{escape(body_empty)}">
+  <input type="hidden" name="subject" value="{escape(raw["mail_subject"])}">
+  <label class="sr-only" for="link-{variant}">{t("link_label")}</label>
+  <span class="capture-icon">{icon("link", 18)}</span>
+  <input id="link-{variant}" name="body" type="text" inputmode="url" autocomplete="url" spellcheck="false" placeholder="{t("link_placeholder")}">
+  <button class="btn btn-primary" type="submit">{label}</button>
+</form>'''
+
+
+# The app's five caption styles (worker/clipper/pipeline/captions.py): words shown, which word is active, colours.
+CAPTION_STYLES = [
+    {"id": "bold", "name": "Bold Pop", "words": 3, "active": 1},
+    {"id": "karaoke", "name": "Karaoke", "words": 4, "active": 2},
+    {"id": "minimal", "name": "Minimal", "words": 7, "active": -1},
+    {"id": "boxed", "name": "Boxed", "words": 5, "active": 1},
+    {"id": "neon", "name": "Neon", "words": 2, "active": 1},
+]
+
+
+def caption_gallery(code: str, t) -> str:
+    sample = STRINGS[code]["landing"]["mock_hook"].strip("“”\"„ ").rstrip(".")
+    words = sample.split()
+    cards = []
+    for i, st in enumerate(CAPTION_STYLES):
+        ws = words[: st["words"]]
+        cap = " ".join(f'<span class="{"on" if j == st["active"] else ""}">{escape(w)}</span>' for j, w in enumerate(ws))
+        cards.append(f'''<li class="style-card style-{st["id"]}"><div class="style-frame" aria-hidden="true">
+      <div class="style-speaker">{speaker("sp")}</div><p class="style-caption">{cap}</p></div>
+      <p class="style-name">{st["name"]}</p></li>''')
+    return f'''<section id="captions" class="section band" aria-labelledby="captions-title"><div class="wrap">
+    {section_head("captions-title", t("styles_title"), t("styles_lead"))}
+    <ul class="styles">{"".join(cards)}</ul>
+  </div></section>'''
+
+
 BARS = [38, 52, 30, 64, 46, 72, 58, 88, 94, 80, 70, 44, 36, 50, 62, 40, 34, 56, 48, 76, 90, 84, 66, 42,
         32, 46, 58, 38, 52, 70, 86, 96, 78, 60, 44, 36, 54, 40, 30, 48]
 PICKED = [(6, 10), (19, 22), (29, 33)]
@@ -160,6 +222,8 @@ PICKED = [(6, 10), (19, 22), (29, 33)]
 def hero_visual(t) -> str:
     bars = "".join(f'<span class="{"on" if any(a <= i <= b for a, b in PICKED) else ""}" style="height:{h}%"></span>' for i, h in enumerate(BARS))
     words = "".join(f'<span class="word" style="animation-delay:{i}s">{t(k)}</span>' for i, k in enumerate(["landing.mock_w1", "landing.mock_w2", "landing.mock_w3"]))
+    back = lambda cls, score, sp: (f'<div class="phone {cls}"><div class="phone-speaker">{speaker("sp " + sp)}</div>'
+                                   f'<span class="score">{icon("trend", 12)}{score}</span></div>')
     return f'''<div class="hero-visual" role="img" aria-label="{t("landing.hero_figure")}">
   <div aria-hidden="true">
     <div class="source">
@@ -171,7 +235,9 @@ def hero_visual(t) -> str:
       <div class="bars">{bars}</div>
       <div class="moments"><span>#1</span><span>#2</span><span>#3</span></div>
     </div>
-    <div class="phone">
+    {back("phone-back phone-left", 88, "sp-b")}
+    {back("phone-back phone-right", 85, "sp-a")}
+    <div class="phone phone-front">
       <div class="phone-speaker">{speaker("sp")}</div>
       <div class="track"></div>
       <span class="score">{icon("trend", 12)}92</span>
@@ -336,7 +402,14 @@ def landing(lang: dict) -> str:
     faq = "".join(f'<details><summary>{t(f"landing.q_{q}")}{icon("chevron", 18, "chev")}</summary><p class="muted">{t(f"landing.a_{q}")}</p></details>'
                   for q in ["minutes", "free", "langs", "training", "data", "cancel", "rights"])
     start_href, start_label = start_link(code, t)
-    hero_note = t("landing.hero_note") if APP_LIVE else f'{t("early_note")}<br>{t("early_hint")}'
+    hero_note = t("landing.hero_note") if APP_LIVE else f'{t("early_free")} {t("early_hint")}'
+    hero_action = (f'<div class="hero-ctas"><a class="btn btn-primary btn-large" href="{start_href}">{start_label} {icon("arrow")}</a>'
+                   f'<a class="btn btn-ghost btn-large" href="#pricing">{t("landing.hero_plans")}</a></div>') if APP_LIVE \
+        else capture_form(code, t, "hero", t("early"))
+    chip_items = [("#features", "chip_moments"), ("#features", "common.viralityScore"), ("#features", "chip_reframe"),
+                  ("#captions", "landing.f_captions_t"), ("#features", "landing.f_brand_t"), ("#faq", "chip_langs")]
+    chips = "".join(f'<li><a href="{h}">{t(k)}</a></li>' for h, k in chip_items)
+    dock = "" if APP_LIVE else f'<div class="dock" data-dock hidden>{capture_form(code, t, "dock", t("early_short"))}</div>'
     cta_title = t("landing.cta_title") if APP_LIVE else t("early_cta_title")
     cta_body = t("landing.cta_body") if APP_LIVE else t("early_cta_body")
     cta_alt = "" if APP_LIVE else '<p class="alt">' + t("early_alt", email="EMAIL").replace("EMAIL", f'<a href="mailto:{CONTACT}">{CONTACT}</a>') + "</p>"
@@ -356,15 +429,13 @@ def landing(lang: dict) -> str:
 {header(lang, t)}
 <main id="content">
   <section class="wrap hero" aria-labelledby="hero-title">
-    <div>
-      <p class="eyebrow">{t("landing.hero_eyebrow")}</p>
+    <div class="hero-copy">
+      <p class="pill">{t("hero_pill") if not APP_LIVE else t("landing.hero_eyebrow")}</p>
       <h1 id="hero-title">{t("landing.hero_title")}</h1>
       <p class="lead">{t("landing.hero_lead")}</p>
-      <div class="hero-ctas">
-        <a class="btn btn-primary btn-large" href="{start_href}">{start_label} {icon("arrow")}</a>
-        <a class="btn btn-ghost btn-large" href="#pricing">{t("landing.hero_plans")}</a>
-      </div>
-      <p class="muted small">{hero_note}</p>
+      {hero_action}
+      <p class="muted small hero-note">{hero_note}</p>
+      <ul class="chips" aria-label="{t("chips_label")}">{chips}</ul>
     </div>
     {hero_visual(t)}
   </section>
@@ -384,13 +455,15 @@ def landing(lang: dict) -> str:
     <ul class="features">{feats}</ul>
   </div></section>
 
-  <section id="privacy" class="section band" aria-labelledby="privacy-title"><div class="wrap">
+  {caption_gallery(code, t)}
+
+  <section id="privacy" class="section" aria-labelledby="privacy-title"><div class="wrap">
     {section_head("privacy-title", t("landing.privacy_title"), t("landing.privacy_lead"))}
     <ul class="grid-3">{privacy}</ul>
     <p class="note">{t("landing.privacy_note")}{privacy_links}</p>
   </div></section>
 
-  <section id="pricing" class="section" aria-labelledby="pricing-title"><div class="wrap">
+  <section id="pricing" class="section band" aria-labelledby="pricing-title"><div class="wrap">
     {section_head("pricing-title", t("landing.pricing_title"), t("landing.pricing_lead"))}
     <ul class="grid-3 plans">{"".join(plans)}</ul>
     <p class="note">{pricing_note}</p>
@@ -402,11 +475,12 @@ def landing(lang: dict) -> str:
   </div></section>
 
   <section class="wrap cta-wrap" aria-labelledby="cta-title"><div class="cta">
-    <div><h2 id="cta-title">{cta_title}</h2><p>{cta_body}</p>{cta_alt}</div>
-    <a class="btn btn-inverse btn-large" href="{start_href}">{start_label} {icon("arrow")}</a>
+    <div class="cta-copy"><h2 id="cta-title">{cta_title}</h2><p>{cta_body}</p>{cta_alt}</div>
+    {f'<a class="btn btn-inverse btn-large" href="{start_href}">{start_label} {icon("arrow")}</a>' if APP_LIVE else capture_form(code, t, "cta", t("early_short"))}
   </div></section>
 </main>
 {footer(lang, t)}
+{dock}
 <script type="application/ld+json">{jsonld}</script>
 </body>
 </html>
