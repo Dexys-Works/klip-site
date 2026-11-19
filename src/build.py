@@ -9,10 +9,17 @@ robots.txt, sitemap.xml. No dependencies beyond the Python standard library.
 import json
 import pathlib
 from html import escape
+from urllib.parse import quote
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SITE = "https://klip.dexysworks.com"
 APP = "https://app.klip.dexysworks.com"  # the Klip app: sign-in, sign-up, billing, legal pages
+
+# False until the app is deployed at APP: "Sign in" / "Start free" become "Get early access" (a pre-filled email to
+# CONTACT, in the visitor's language, naming the plan), and links into the app (legal pages) are left out.
+# Set to True and rebuild once APP works.
+APP_LIVE = False
+CONTACT = "paulo.cardoso@outlook.com"  # already public on dexysworks.com
 
 # Languages: catalog code, URL path, <html lang>, Open Graph locale, name in its own language, short label.
 LANGS = [
@@ -32,11 +39,38 @@ PLANS = [
 # Strings only the static site needs (the rest come from the app's catalogs via strings.json).
 EXTRA = {
     "en": {"nf_title": "Page not found", "nf_body": "This page doesn’t exist. It may have moved.", "nf_home": "Back to the home page",
+           "early": "Get early access", "early_short": "Early access",
+           "early_note": "Opening soon. Free plan: 30 minutes of video a month, no card needed.",
+           "early_hint": "Opens your email app. We only use your address to tell you when you can start.",
+           "early_cta_title": "Be among the first to try it",
+           "early_cta_body": "Dexys Klip opens soon. Send us a short email and we’ll let you know when your account is ready.",
+           "early_pricing": "Plans start when Dexys Klip opens.",
+           "mail_subject": "Early access to Dexys Klip",
+           "mail_body": "Hi,\n\nI’d like early access to Dexys Klip.\n\nPlan I’m interested in: {plan}\nWhat I want to make clips from (podcast, streams, talks, gameplay…): \n\nThanks!",
+           "mail_any": "not sure yet",
 },
     "pt-BR": {"nf_title": "Página não encontrada", "nf_body": "Esta página não existe. Ela pode ter mudado de lugar.",
-              "nf_home": "Voltar para o início"},
+              "nf_home": "Voltar para o início",
+              "early": "Pedir acesso antecipado", "early_short": "Acesso antecipado",
+              "early_note": "Em breve. Plano grátis: 30 minutos de vídeo por mês, sem cartão.",
+              "early_hint": "Abre seu app de e-mail. Usamos seu endereço só para avisar quando você puder começar.",
+              "early_cta_title": "Seja um dos primeiros a experimentar",
+              "early_cta_body": "O Dexys Klip abre em breve. Mande um e-mail curto e avisaremos quando sua conta estiver pronta.",
+              "early_pricing": "Os planos começam quando o Dexys Klip abrir.",
+              "mail_subject": "Acesso antecipado ao Dexys Klip",
+              "mail_body": "Olá,\n\nQuero acesso antecipado ao Dexys Klip.\n\nPlano que me interessa: {plan}\nDe onde quero fazer clipes (podcast, lives, palestras, gameplay…): \n\nObrigado!",
+              "mail_any": "ainda não sei"},
     "nl": {"nf_title": "Pagina niet gevonden", "nf_body": "Deze pagina bestaat niet. Misschien is hij verplaatst.",
-           "nf_home": "Terug naar de homepage"},
+           "nf_home": "Terug naar de homepage",
+           "early": "Vroege toegang aanvragen", "early_short": "Vroege toegang",
+           "early_note": "Binnenkort beschikbaar. Gratis abonnement: 30 minuten video per maand, geen creditcard nodig.",
+           "early_hint": "Opent je e-mailprogramma. We gebruiken je adres alleen om je te laten weten wanneer je kunt beginnen.",
+           "early_cta_title": "Probeer het als een van de eersten",
+           "early_cta_body": "Dexys Klip gaat binnenkort open. Stuur ons een korte e-mail en we laten je weten wanneer je account klaar is.",
+           "early_pricing": "De abonnementen starten zodra Dexys Klip opengaat.",
+           "mail_subject": "Vroege toegang tot Dexys Klip",
+           "mail_body": "Hoi,\n\nIk wil graag vroege toegang tot Dexys Klip.\n\nAbonnement dat me interesseert: {plan}\nWaar ik clips van wil maken (podcast, streams, presentaties, gameplay…): \n\nBedankt!",
+           "mail_any": "weet ik nog niet"},
 }
 
 STRINGS = json.loads((ROOT / "src/strings.json").read_text())
@@ -102,6 +136,20 @@ def translator(code: str):
 
 def eur(code: str, n: int) -> str:
     return f"€{n}" if code == "en" else f"€ {n}"
+
+
+def early_href(code: str, plan: str = "") -> str:
+    """mailto: link with a subject and body in the visitor's language (escaped for an HTML attribute)."""
+    raw = EXTRA[code]
+    body = raw["mail_body"].replace("{plan}", plan or raw["mail_any"])
+    return escape(f"mailto:{CONTACT}?subject={quote(raw['mail_subject'])}&body={quote(body)}")
+
+
+def start_link(code: str, t, plan_name: str = "") -> tuple:
+    """(href, label) for the main call to action: sign-up while the app is live, early access before."""
+    if APP_LIVE:
+        return f"{APP}/sign-up", t("landing.start")
+    return early_href(code, plan_name), t("early")
 
 
 BARS = [38, 52, 30, 64, 46, 72, 58, 88, 94, 80, 70, 44, 36, 50, 62, 40, 34, 56, 48, 76, 90, 84, 66, 42,
@@ -187,6 +235,9 @@ def head(lang: dict, t, title: str, description: str, path: str, index: bool = T
 
 
 def header(lang: dict, t) -> str:
+    href, label = start_link(lang["code"], t)
+    signin = (f'<a class="signin-text" href="{APP}/sign-in">{t("landing.signIn")}</a>'
+              f'<a class="btn btn-ghost signin-btn" href="{APP}/sign-in">{t("landing.signIn")}</a>') if APP_LIVE else ""
     links = [("#how", "landing.nav_how"), ("#features", "landing.nav_features"), ("#privacy", "landing.nav_privacy"),
              ("#pricing", "landing.nav_pricing"), ("#faq", "landing.nav_faq")]
     nav = "".join(f'<li><a href="{h}">{t(k)}</a></li>' for h, k in links)
@@ -195,9 +246,8 @@ def header(lang: dict, t) -> str:
     {brand(lang, t)}
     <nav class="header-nav" aria-label="{t("landing.nav_label")}"><ul>{nav}</ul></nav>
     <div class="header-actions">
-      <a class="signin-text" href="{APP}/sign-in">{t("landing.signIn")}</a>
-      <a class="btn btn-ghost signin-btn" href="{APP}/sign-in">{t("landing.signIn")}</a>
-      <a class="btn btn-primary btn-compact" href="{APP}/sign-up">{t("landing.start")}</a>
+      {signin}
+      <a class="btn btn-primary btn-compact" href="{href}">{label if APP_LIVE else t("early_short")}</a>
     </div>
   </div>
 </header>'''
@@ -224,18 +274,20 @@ def theme_switch(t) -> str:
 
 
 def footer(lang: dict, t, year: int = 2026) -> str:
+    href, label = start_link(lang["code"], t)
+    account = (f'<li><a href="{APP}/sign-in">{t("landing.signIn")}</a></li>' if APP_LIVE else "") + f'<li><a href="{href}">{label}</a></li>'
+    legal = f'''<nav aria-labelledby="footer-legal"><h2 id="footer-legal">{t("landing.footer_legal")}</h2><ul>
+      <li><a href="{APP}/privacy">{t("legal.p_title")}</a></li>
+      <li><a href="{APP}/terms">{t("legal.t_title")}</a></li>
+      <li><a href="{APP}/subprocessors">{t("legal.s_title")}</a></li></ul></nav>''' if APP_LIVE else ""
     return f'''<footer class="site-footer">
   <div class="wrap footer-grid">
     <div class="footer-brand">{brand(lang, t)}<p class="muted">{t("landing.footer_tagline")}</p></div>
     <nav aria-labelledby="footer-product"><h2 id="footer-product">{t("landing.footer_product")}</h2><ul>
       <li><a href="{lang["path"]}#features">{t("landing.nav_features")}</a></li>
       <li><a href="{lang["path"]}#pricing">{t("landing.nav_pricing")}</a></li>
-      <li><a href="{APP}/sign-in">{t("landing.signIn")}</a></li>
-      <li><a href="{APP}/sign-up">{t("landing.start")}</a></li></ul></nav>
-    <nav aria-labelledby="footer-legal"><h2 id="footer-legal">{t("landing.footer_legal")}</h2><ul>
-      <li><a href="{APP}/privacy">{t("legal.p_title")}</a></li>
-      <li><a href="{APP}/terms">{t("legal.t_title")}</a></li>
-      <li><a href="{APP}/subprocessors">{t("legal.s_title")}</a></li></ul></nav>
+      {account}</ul></nav>
+    {legal}
   </div>
   <div class="wrap footer-bottom">
     <p>{t("landing.footer_copy", year="YEAR").replace("YEAR", f'<span data-year>{year}</span>')}</p>
@@ -268,15 +320,27 @@ def landing(lang: dict) -> str:
     plans = []
     for p in PLANS:
         name = t(f"plans.{p['id']}")
-        href = f"{APP}/sign-up" + (f"?redirect_url=%2Fbilling%3Fplan%3D{p['id']}" if p["price"] else "")
+        if APP_LIVE:
+            href = f"{APP}/sign-up" + (f"?redirect_url=%2Fbilling%3Fplan%3D{p['id']}" if p["price"] else "")
+        else:
+            href = early_href(code, STRINGS[code]["plans"][p["id"]])
         per = f' <span class="per">{t("landing.per_month")}</span>' if p["price"] else ""
         feats_html = "".join(f"<li>{icon('check', 16)}{f}</li>" for f in features_list(p, t))
-        cta = t("landing.choose", name=name) if p["price"] else t("landing.start")
+        if APP_LIVE:
+            cta = t("landing.choose", name=name) if p["price"] else t("landing.start")
+        else:
+            cta = t("early")
         plans.append(f'''<li class="card plan{" featured" if p["id"] == "pro" else ""}"><h3>{name}</h3><p class="muted small">{t(f"pricing.tag_{p['id']}")}</p>
       <p class="price">{eur(code, p["price"])}{per}</p><ul class="plan-features">{feats_html}</ul>
       <a class="btn {"btn-primary" if p["id"] == "pro" else "btn-ghost"} btn-block" href="{href}">{cta}</a></li>''')
     faq = "".join(f'<details><summary>{t(f"landing.q_{q}")}{icon("chevron", 18, "chev")}</summary><p class="muted">{t(f"landing.a_{q}")}</p></details>'
                   for q in ["minutes", "free", "langs", "training", "data", "cancel", "rights"])
+    start_href, start_label = start_link(code, t)
+    hero_note = t("landing.hero_note") if APP_LIVE else f'{t("early_note")}<br>{t("early_hint")}'
+    cta_title = t("landing.cta_title") if APP_LIVE else t("early_cta_title")
+    cta_body = t("landing.cta_body") if APP_LIVE else t("early_cta_body")
+    privacy_links = f' <a href="{APP}/subprocessors">{t("landing.privacy_sub")}</a> · <a href="{APP}/privacy">{t("legal.p_title")}</a>' if APP_LIVE else ""
+    pricing_note = f'{t("pricing.vatNote")} {t("pricing.lead")}' if APP_LIVE else f'{t("early_pricing")} {t("pricing.vatNote")} {t("pricing.lead")}'
     jsonld = json.dumps({
         "@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Dexys Klip", "url": SITE + lang["path"],
         "inLanguage": lang["lang"], "applicationCategory": "MultimediaApplication", "operatingSystem": "Web",
@@ -296,10 +360,10 @@ def landing(lang: dict) -> str:
       <h1 id="hero-title">{t("landing.hero_title")}</h1>
       <p class="lead">{t("landing.hero_lead")}</p>
       <div class="hero-ctas">
-        <a class="btn btn-primary btn-large" href="{APP}/sign-up">{t("landing.start")} {icon("arrow")}</a>
+        <a class="btn btn-primary btn-large" href="{start_href}">{start_label} {icon("arrow")}</a>
         <a class="btn btn-ghost btn-large" href="#pricing">{t("landing.hero_plans")}</a>
       </div>
-      <p class="muted small">{t("landing.hero_note")}</p>
+      <p class="muted small">{hero_note}</p>
     </div>
     {hero_visual(t)}
   </section>
@@ -322,13 +386,13 @@ def landing(lang: dict) -> str:
   <section id="privacy" class="section band" aria-labelledby="privacy-title"><div class="wrap">
     {section_head("privacy-title", t("landing.privacy_title"), t("landing.privacy_lead"))}
     <ul class="grid-3">{privacy}</ul>
-    <p class="note">{t("landing.privacy_note")} <a href="{APP}/subprocessors">{t("landing.privacy_sub")}</a> · <a href="{APP}/privacy">{t("legal.p_title")}</a></p>
+    <p class="note">{t("landing.privacy_note")}{privacy_links}</p>
   </div></section>
 
   <section id="pricing" class="section" aria-labelledby="pricing-title"><div class="wrap">
     {section_head("pricing-title", t("landing.pricing_title"), t("landing.pricing_lead"))}
     <ul class="grid-3 plans">{"".join(plans)}</ul>
-    <p class="note">{t("pricing.vatNote")} {t("pricing.lead")}</p>
+    <p class="note">{pricing_note}</p>
   </div></section>
 
   <section id="faq" class="section faq-section" aria-labelledby="faq-title"><div class="wrap faq-grid">
@@ -337,8 +401,8 @@ def landing(lang: dict) -> str:
   </div></section>
 
   <section class="wrap cta-wrap" aria-labelledby="cta-title"><div class="cta">
-    <div><h2 id="cta-title">{t("landing.cta_title")}</h2><p>{t("landing.cta_body")}</p></div>
-    <a class="btn btn-inverse btn-large" href="{APP}/sign-up">{t("landing.start")} {icon("arrow")}</a>
+    <div><h2 id="cta-title">{cta_title}</h2><p>{cta_body}</p></div>
+    <a class="btn btn-inverse btn-large" href="{start_href}">{start_label} {icon("arrow")}</a>
   </div></section>
 </main>
 {footer(lang, t)}

@@ -3,8 +3,13 @@
 Static landing page for Dexys Klip, served by GitHub Pages. Plain HTML, CSS and a little JavaScript: no build service,
 no third-party requests (fonts and images are self-hosted).
 
-The Klip app itself (sign-in, dashboard, billing, legal pages) lives at **https://app.klip.dexysworks.com**; every
-"Sign in", "Start free" and legal link on this page points there.
+The Klip app itself (sign-in, dashboard, billing, legal pages) will live at **https://app.klip.dexysworks.com**.
+
+**Early access mode (current).** Until the app is deployed, `APP_LIVE = False` in `src/build.py`: every call to action
+is "Get early access", a pre-filled email to `CONTACT` (paulo.cardoso@outlook.com) in the visitor's language that
+names the plan they clicked, and links into the app (sign-in, legal pages) are left out. No form service or other
+third party is involved. When the app works at its URL, set `APP_LIVE = True`, rebuild and commit: "Sign in",
+"Start free", plan checkout links and the legal links come back.
 
 ## Layout
 
@@ -50,7 +55,7 @@ equal to the app: limits in `worker/clipper/billing.py`, prices in `CLIPPER_PRIC
 
 ## The app moves to app.klip.dexysworks.com
 
-Until this is done, the page's buttons lead nowhere:
+Then switch off early access mode (`APP_LIVE = True`). Steps:
 
 - Terraform (`infra/aws` or `infra/azure` in the app repo): `domain_name = "app.klip.dexysworks.com"`, apply, and add
   the DNS records Terraform outputs for that host.
